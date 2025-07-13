@@ -28,6 +28,9 @@ mvn spring-boot:run
 
 # Screenshots
 
+<img width="2517" height="1362" alt="Image" src="https://github.com/user-attachments/assets/2ae11117-b7c4-4a4e-a8db-47e4f75b17fd" />
+
+<img width="2501" height="1231" alt="Image" src="https://github.com/user-attachments/assets/dd9062a5-d108-423b-8a4c-fe84333227c9" />
 
 
 
