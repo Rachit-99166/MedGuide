@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MedGuide</title>
+
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"/>
+
+  <style>
+    body {
+      background-color: #ffffff;      
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .feedback-tab {
+      position: sticky;
+      top: 80px;
+    }
+
+    .grey-wrapper {
+      background-color: #ececec;
+      border-radius: 12px;
+      padding: 2rem 1.5rem;
+    }
+
+    .info-box {
+      background-color: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,.08);
+      padding: 1.8rem;
+      margin-bottom: 2rem;
+      overflow: auto;              
+    }
+
+    .info-img {
+      width: 100%;
+      max-width: 420px;              
+      height: 280px;
+      border-radius: 12px;
+    }
+    .info-img:hover { 
+        transform: scale(1.1); 
+    }
+
+    .info-circle {
+        position: fixed;
+        right: 20px;
+        bottom: 20px;
+        width: 50px;
+        height: 50px;
+        background-color: green;
+        color: white;
+        border-radius: 50%;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .info-circle:hover .quote-box {
+        opacity: 1;
+    }
+
+    .quote-box {
+        position: absolute;
+        right: 60px;
+        bottom: 0;
+        width: 260px;
+        background-color: white;
+        border: 4px solid green;
+        border-radius: 8px;
+        padding: 12px 16px;
+        font-size: 14px;
+        color: #444;
+        opacity: 0;
+    }
+
+  </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">MedGuide</a>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item"><a class="nav-link active" th:href="@{/dashboard}">Home</a></li>
+        <li class="nav-item"><a class="nav-link active" href="/symptom-checker">Medicine Advice</a></li>
+      </ul>
+      <form class="d-flex" th:action="@{/logout}" method="post">
+        <button class="btn btn-outline-light" type="submit">Logout</button>
+      </form>
+    </div>
+  </div>
+</nav>
+
+<div class="info-circle">
+    i
+    <div class="quote-box">
+        <p th:text="${quote}"></p>
+    </div>
+</div>
+
+
+<div class="feedback-tab ms-2 mt-2">
+  <a class="btn btn-warning fw-bold" th:href="@{/feedback}">Feedback</a>
+</div>
+
+<main class="container my-4 grey-wrapper">
+
+  <h1 class="text-center fw-bold mb-4">AI‑Powered Medical Assistant</h1>
+
+  <div class="info-box clearfix">
+    <img th:src="@{/Images/image1.jpg}" alt="Doctor with mask"
+         class="info-img float-md-start me-md-4 mb-3 mb-md-0">
+
+    <p><i>
+      This website can help you identify potential diseases based on the symptoms you provide using advanced AI-powered analysis. 
+      By simply entering how you're feeling, the system quickly scans through medical knowledge and matches your symptoms with 
+      possible conditions. It then provides you with a detailed understanding of what you might be experiencing, along with 
+      urgent care advice if needed. What makes it even more helpful is that you can directly connect with professional doctors 
+      through the platform without needing any prior appointment or consultation fee. This makes getting timely medical support 
+      faster, easier, and more accessible for everyone.</i>
+    </p>
+  </div>
+
+  <div class="info-box clearfix">
+    <img th:src="@{/Images/image2.jpg}" alt="Doctor gloves"
+         class="info-img float-md-end ms-md-4 mb-3 mb-md-0">
+
+    <p><i>
+      In addition, the assistant can automatically remind you of upcoming vaccinations, schedule follow‑up checks 
+      when your reported symptoms warrant it, and flag any dangerous drug interactions based on the medications you input. 
+      It tailors wellness insights such as personalised exercise suggestions, nutrition guidance, and stress‑management techniques 
+      by learning from your lifestyle data over time. Secure end‑to‑end encryption ensures that every symptom you log, 
+      question you ask, or report you generate remains confidential. And because the system continuously updates its medical 
+      knowledge base, you always receive the most current, evidence‑backed recommendations empowering you to make informed 
+      decisions and stay proactive about your health.
+      </i>
+    </p>
+  </div>
+
+  <a href="/map" class="btn btn-success mt-3">Find Nearby Hospitals</a>
+
+  <form class="mt-5" th:action="@{/ask}" method="post">
+    <label class="form-label fw-semibold">Ask any medical related question:</label>
+    <div class="input-group">
+      <input class="form-control" name="question" placeholder="Type your question here" required>
+      <button class="btn btn-success" type="submit">Submit</button>
+    </div>
+  </form>
+
+  <div class="mt-4">
+    <h5 th:if="${answer}" class="fw-bold">Answer:</h5>
+    <p th:text="${answer}"></p>
+  </div>
+
+  <div class="mt-5">
+    <label class="mt-2"><B>Upload your medical documents:</B></label>
+    <form th:action="@{/upload}" method="post" enctype="multipart/form-data">
+      <input type="file" name="input" required>
+      <button type="submit">Upload</button>
+  </form>
+  <p th:if="${uploadMessage}" th:text="${uploadMessage}" 
+   class="text-success" style="margin-top: 10px;"></p>
+  </div>
+</main>
+
+  <div class="info-box">
+    <h4 class="mb-3">Contact doctors in your area</h4>
+    <p class="mb-2">Need an in‑person consultation? Quick links:</p>
+    <ul class="list-unstyled mb-0">
+      <li><a href="https://www.google.com/search?q=doctors+near+me" target="_blank">Google Search</a></li>
+      <li><a href="https://www.google.com/maps/search/doctors/" target="_blank">Google Maps</a></li>
+      <li><a href="mailto:duarachit387@gmail.com">Mail us</a></li>
+    </ul>
+  </div>
+
+<footer class="text-center text-white bg-primary py-2 mt-auto">
+  <a class="btn btn-outline-light btn-sm me-2" th:href="@{/dashboard}">Home</a>
+  © 2025 MedGuide. All rights reserved.
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
