@@ -7,7 +7,7 @@ MedGuide is an AI-powered medical assistance web application that helps users id
 It eliminates time-consuming waiting queues, requires no advance appointments or consultation fees just enter your symptoms, get instant medical guidance, and take informed action. In critical situations, users can also seek immediate help through the integrated emergency feature.
 
 # Skills
-
+ 
 Java, Spring Boot, Bootstrap, Html, Css, AI Integration, Apis, Sql.
 
 # How to Run
